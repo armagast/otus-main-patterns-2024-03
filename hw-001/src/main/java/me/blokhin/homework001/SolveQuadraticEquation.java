@@ -10,10 +10,13 @@ public class SolveQuadraticEquation {
     }
 
     public double[] solve(final double a, final double b, final double c, final double epsilon) {
+        assertTrue(Double.isFinite(a), "{a} must be finite number");
+        assertTrue(Double.isFinite(b), "{b} must be finite number");
+        assertTrue(Double.isFinite(c), "{c} must be finite number");
+        assertTrue(Double.isFinite(epsilon), "{epsilon} must be finite number");
+
+        assertTrue(epsilon > 0, "{epsilon} must be greater than 0");
         assertTrue(Math.abs(a) > epsilon, "{a} must not be in [-epsilon, +epsilon]");
-        assertTrue(!Double.isNaN(a) && Double.isFinite(a), "{a} must be finite number");
-        assertTrue(!Double.isNaN(b) && Double.isFinite(b), "{b} must be finite number");
-        assertTrue(!Double.isNaN(c) && Double.isFinite(c), "{c} must be finite number");
 
         final double d = b * b - 4 * a * c;
 
