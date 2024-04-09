@@ -1,7 +1,17 @@
 package me.blokhin.homework001;
 
 public class SolveQuadraticEquation {
+    public static void assertTrue(final boolean condition, final String message) {
+        if (!condition) throw new IllegalArgumentException(message);
+    }
+
     public double[] solve(final double a, final double b, final double c) {
+        return solve(a, b, c, 1E-05);
+    }
+
+    public double[] solve(final double a, final double b, final double c, final double epsilon) {
+        assertTrue(Math.abs(a) > epsilon, "{a} must not be in [-epsilon, +epsilon]");
+
         final double d = b * b - 4 * a * c;
 
         if (d < 0) {
