@@ -45,13 +45,17 @@ public class SolveQuadraticEquationTest {
     }
 
     @Test
-    @DisplayName("throws exception when on of {a}, {b} or {c} is not a number or infinity")
+    @DisplayName("throws exception when one of {a}, {b}, {c}, {epsilon} is not a finite number")
     void test005() {
         assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(Double.POSITIVE_INFINITY, 1, 1));
         assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, Double.POSITIVE_INFINITY, 1));
         assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, 1, Double.POSITIVE_INFINITY));
-
-        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, 1, 1, 0));
         assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, 1, 1, Double.POSITIVE_INFINITY));
+    }
+
+    @Test
+    @DisplayName("throws exception when {epsilon} is not a positive number")
+    void test006() {
+        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, 1, 1, 0));
     }
 }
