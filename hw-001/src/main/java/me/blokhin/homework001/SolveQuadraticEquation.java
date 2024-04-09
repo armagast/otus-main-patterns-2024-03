@@ -15,6 +15,8 @@ public class SolveQuadraticEquation {
             return new double[]{x1, x2};
         }
 
-        throw new Error("Not implemented");
+        final double x = (-b) / (2 * a);
+
+        return new double[]{x};
     }
 }
