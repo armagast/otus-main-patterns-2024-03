@@ -26,4 +26,12 @@ public class SolveQuadraticEquationTest {
 
         assertArrayEquals(exp, Arrays.stream(act).sorted().toArray());
     }
+
+    @Test
+    @DisplayName("x² + 2x - 1 = 0 has 1 solution")
+    void test003() {
+        final double[] exp = {(-1)};
+
+        assertArrayEquals(exp, solveQuadraticEquation.solve(1, 2, 1));
+    }
 }
