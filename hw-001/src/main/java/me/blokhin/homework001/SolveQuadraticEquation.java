@@ -8,6 +8,13 @@ public class SolveQuadraticEquation {
             return new double[0];
         }
 
+        if (d > 0) {
+            final double x1 = (-b + Math.sqrt(d)) / (2 * a);
+            final double x2 = (-b - Math.sqrt(d)) / (2 * a);
+
+            return new double[]{x1, x2};
+        }
+
         throw new Error("Not implemented");
     }
 }
