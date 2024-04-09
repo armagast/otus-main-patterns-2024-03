@@ -28,11 +28,14 @@ public class SolveQuadraticEquationTest {
     }
 
     @Test
-    @DisplayName("x² + 2x - 1 = 0 has 1 solution")
+    @DisplayName("0.2x² + 0.3x + 0.1125 = 0 has 1 solution")
     void test003() {
-        final double[] exp = {(-1)};
+        final double epsilon = 1E-05;
 
-        assertArrayEquals(exp, solveQuadraticEquation.solve(1, 2, 1));
+        final double[] exp = {(-0.75)};
+        final double[] act = solveQuadraticEquation.solve(0.2, 0.3, 0.1125, epsilon);
+
+        assertArrayEquals(exp, act, epsilon);
     }
 
     @Test
