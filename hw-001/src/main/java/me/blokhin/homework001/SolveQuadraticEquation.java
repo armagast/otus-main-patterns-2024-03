@@ -14,11 +14,11 @@ public class SolveQuadraticEquation {
 
         final double d = b * b - 4 * a * c;
 
-        if (d < 0) {
+        if (d < -epsilon) {
             return new double[0];
         }
 
-        if (d > 0) {
+        if (d > +epsilon) {
             final double x1 = (-b + Math.sqrt(d)) / (2 * a);
             final double x2 = (-b - Math.sqrt(d)) / (2 * a);
 
