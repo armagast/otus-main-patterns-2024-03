@@ -43,4 +43,15 @@ public class SolveQuadraticEquationTest {
     void test004() {
         assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(0, 1, 1));
     }
+
+    @Test
+    @DisplayName("throws exception when on of {a}, {b} or {c} is not a number or infinity")
+    void test005() {
+        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(Double.NaN, 1, 1));
+        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, Double.NaN, 1));
+        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, 1, Double.NaN));
+        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(Double.POSITIVE_INFINITY, 1, 1));
+        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, Double.POSITIVE_INFINITY, 1));
+        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(1, 1, Double.POSITIVE_INFINITY));
+    }
 }
