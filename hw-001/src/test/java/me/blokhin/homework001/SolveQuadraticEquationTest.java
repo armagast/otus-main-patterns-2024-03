@@ -34,4 +34,10 @@ public class SolveQuadraticEquationTest {
 
         assertArrayEquals(exp, solveQuadraticEquation.solve(1, 2, 1));
     }
+
+    @Test
+    @DisplayName("throws exception when {a} is near zero")
+    void test004() {
+        assertThrows(IllegalArgumentException.class, () -> solveQuadraticEquation.solve(0, 1, 1));
+    }
 }
