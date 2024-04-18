@@ -1,12 +1,15 @@
 package me.blokhin.homework001;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.Objects;
 
-@RequiredArgsConstructor
 public class CommandMove {
     private final Movable movable;
+
+    public CommandMove(Movable movable) {
+        Assert.notNull(movable, "{movable} must not be null");
+
+        this.movable = movable;
+    }
 
     void execute() {
         final Vector position = movable.getPosition();

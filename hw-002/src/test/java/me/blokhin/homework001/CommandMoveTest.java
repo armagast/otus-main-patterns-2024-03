@@ -13,8 +13,14 @@ public class CommandMoveTest {
     final Vector velocity = new Vector(-7, 3);
 
     @Test
+    @DisplayName("Throws when movable is null")
+    void assertsArgs() {
+        assertThrows(IllegalArgumentException.class, () -> new CommandMove(null));
+    }
+
+    @Test
     @DisplayName("Moves movable at (12, 5) with velocity (-7, 3) to (5, 8)")
-    void test001() {
+    void actuallyMoves() {
         final Vector positionNext = new Vector(5, 8);
 
         final ArgumentCaptor<Vector> positionNextCaptor = ArgumentCaptor.forClass(Vector.class);
@@ -32,7 +38,7 @@ public class CommandMoveTest {
 
     @Test
     @DisplayName("Throws when position is null")
-    void test002() {
+    void throwsWhenPositionIsNull() {
         final Movable movable = mock(Movable.class);
         doReturn(null).when(movable).getPosition();
         doReturn(velocity).when(movable).getVelocity();
@@ -44,7 +50,7 @@ public class CommandMoveTest {
 
     @Test
     @DisplayName("Does not intercept exception thrown by getPosition")
-    void test004() {
+    void passesThroughThrownByGetPosition() {
         final Movable movable = mock(Movable.class);
         doThrow(new IllegalStateException()).when(movable).getPosition();
         doReturn(velocity).when(movable).getVelocity();
@@ -56,7 +62,7 @@ public class CommandMoveTest {
 
     @Test
     @DisplayName("Throws when velocity is null")
-    void test003() {
+    void throwsWhenVelocityIsNull() {
         final Movable movable = mock(Movable.class);
         doReturn(position).when(movable).getPosition();
         doReturn(null).when(movable).getVelocity();
@@ -68,7 +74,7 @@ public class CommandMoveTest {
 
     @Test
     @DisplayName("Does not intercept exception thrown by getVelocity")
-    void test005() {
+    void passesThroughThrownByGetVelocity() {
         final Movable movable = mock(Movable.class);
         doReturn(position).when(movable).getPosition();
         doThrow(new IllegalStateException()).when(movable).getVelocity();
@@ -80,7 +86,7 @@ public class CommandMoveTest {
 
     @Test
     @DisplayName("Does not intercept exception thrown by setPosition")
-    void test006() {
+    void passesThroughThrownBySetVelocity() {
         final Movable movable = mock(Movable.class);
         doReturn(position).when(movable).getPosition();
         doReturn(velocity).when(movable).getVelocity();
