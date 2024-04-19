@@ -8,6 +8,8 @@ public class Vector {
     int y;
 
     public Vector add(Vector that) {
+        Assert.notNull(that, "{that} must not be null");
+
         return new Vector(x + that.x, y + that.y);
     }
 }

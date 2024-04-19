@@ -11,7 +11,7 @@ public class CommandMove {
         this.movable = movable;
     }
 
-    void execute() {
+    public void execute() {
         final Vector position = movable.getPosition();
         Assert.state(Objects.nonNull(position), "{position} must not be null");
 
