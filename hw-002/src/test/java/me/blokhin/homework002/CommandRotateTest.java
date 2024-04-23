@@ -1,4 +1,4 @@
-package me.blokhin.homework001;
+package me.blokhin.homework002;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

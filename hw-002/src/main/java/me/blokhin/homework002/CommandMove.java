@@ -1,4 +1,4 @@
-package me.blokhin.homework001;
+package me.blokhin.homework002;
 
 import java.util.Objects;
 
@@ -18,7 +18,7 @@ public class CommandMove {
         final Vector velocity = movable.getVelocity();
         Assert.state(Objects.nonNull(velocity), "{velocity} must not be null");
 
-        final Vector positionNext = movable.getPosition().add(movable.getVelocity());
+        final Vector positionNext = movable.getPosition().add(velocity);
         movable.setPosition(positionNext);
     }
 }

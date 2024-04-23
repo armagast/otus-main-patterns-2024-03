@@ -1,4 +1,4 @@
-package me.blokhin.homework001;
+package me.blokhin.homework002;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,7 @@ import static org.mockito.Mockito.*;
 
 public class CommandMoveTest {
     final Vector position = new Vector(12, 5);
-    final Vector velocity = new Vector(-7, 3);
+    final Vector velocity = new Vector((-7), 3);
 
     @Test
     @DisplayName("Throws when movable is null")
@@ -37,6 +37,18 @@ public class CommandMoveTest {
     }
 
     @Test
+    @DisplayName("Does not intercept exception thrown by Vector::add")
+    void passesThroughThrownByVectorAdd() {
+        final Movable movable = mock(Movable.class);
+        doReturn(new Vector(5, 3)).when(movable).getPosition();
+        doReturn(new Vector(2, 3, 5)).when(movable).getVelocity();
+
+        final CommandMove move = new CommandMove(movable);
+
+        assertThrows(IllegalArgumentException.class, move::execute);
+    }
+
+    @Test
     @DisplayName("Throws when position is null")
     void throwsWhenPositionIsNull() {
         final Movable movable = mock(Movable.class);
@@ -49,8 +61,8 @@ public class CommandMoveTest {
     }
 
     @Test
-    @DisplayName("Does not intercept exception thrown by getPosition")
-    void passesThroughThrownByGetPosition() {
+    @DisplayName("Does not intercept exception thrown by Movable::getPosition")
+    void passesThroughThrownByMovableGetPosition() {
         final Movable movable = mock(Movable.class);
         doThrow(new IllegalStateException()).when(movable).getPosition();
         doReturn(velocity).when(movable).getVelocity();
@@ -73,8 +85,8 @@ public class CommandMoveTest {
     }
 
     @Test
-    @DisplayName("Does not intercept exception thrown by getVelocity")
-    void passesThroughThrownByGetVelocity() {
+    @DisplayName("Does not intercept exception thrown by Movable::getVelocity")
+    void passesThroughThrownByMovableGetVelocity() {
         final Movable movable = mock(Movable.class);
         doReturn(position).when(movable).getPosition();
         doThrow(new IllegalStateException()).when(movable).getVelocity();
@@ -85,8 +97,8 @@ public class CommandMoveTest {
     }
 
     @Test
-    @DisplayName("Does not intercept exception thrown by setPosition")
-    void passesThroughThrownBySetVelocity() {
+    @DisplayName("Does not intercept exception thrown by Movable::setPosition")
+    void passesThroughThrownByMovableSetVelocity() {
         final Movable movable = mock(Movable.class);
         doReturn(position).when(movable).getPosition();
         doReturn(velocity).when(movable).getVelocity();

@@ -1,4 +1,4 @@
-package me.blokhin.homework001;
+package me.blokhin.homework002;
 
 public interface Movable {
     Vector getPosition();
