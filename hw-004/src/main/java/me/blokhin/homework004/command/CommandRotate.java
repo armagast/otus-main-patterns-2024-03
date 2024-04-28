@@ -7,7 +7,7 @@ import me.blokhin.homework004.Assert;
 import java.util.Objects;
 
 @Value
-public class CommandRotate {
+public class CommandRotate implements Command {
     Rotatable rotatable;
 
     public CommandRotate(final Rotatable rotatable) {

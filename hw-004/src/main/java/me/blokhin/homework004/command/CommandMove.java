@@ -7,7 +7,7 @@ import me.blokhin.homework004.Vector;
 import java.util.Objects;
 
 @Value
-public class CommandMove {
+public class CommandMove implements Command {
     Movable movable;
 
     public CommandMove(final Movable movable) {
