@@ -2,6 +2,7 @@ package me.blokhin.homework003.exceptionhandler;
 
 import me.blokhin.homework003.command.Command;
 import me.blokhin.homework003.command.CommandLogException;
+import me.blokhin.homework003.command.CommandRetry;
 import me.blokhin.homework003.command.Loggable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,26 +10,22 @@ import org.junit.jupiter.api.Test;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 
-class ExceptionHandlerLogExceptionTest {
+class ExceptionHandlerRetryTest {
     @Test
     @DisplayName("Throws IllegalArgumentException when {queue} is null")
     void assertsCtorArgs() {
-        final Loggable loggable = mock(Loggable.class);
-        final Queue<Command> queue = new PriorityQueue<>();
-
-        assertThrows(IllegalArgumentException.class, () -> new ExceptionHandlerLogException(null, loggable));
-        assertThrows(IllegalArgumentException.class, () -> new ExceptionHandlerLogException(queue, null));
+        assertThrows(IllegalArgumentException.class, () -> new ExceptionHandlerRetry(null));
     }
 
     @Test
     @DisplayName("Throws IllegalArgumentException when {command} or {exception} is null")
     void assertsHandleArgs() {
-        final Loggable loggable = mock(Loggable.class);
         final Queue<Command> queue = new PriorityQueue<>();
-        final ExceptionHandler exceptionHandler = new ExceptionHandlerLogException(queue, loggable);
+        final ExceptionHandler exceptionHandler = new ExceptionHandlerRetry(queue);
 
         final Command command = mock(Command.class);
         final Exception exception = mock(Exception.class);
@@ -38,18 +35,18 @@ class ExceptionHandlerLogExceptionTest {
     }
 
     @Test
-    @DisplayName("Adds CommandLogException to the queue")
-    void addsCommandLogExceptionToTheQueue() {
+    @DisplayName("Adds CommandRetry to the queue")
+    void addsCommandRetryToTheQueue() {
         final Loggable loggable = mock(Loggable.class);
         final Queue<Command> queue = new PriorityQueue<>();
-        final ExceptionHandler exceptionHandler = new ExceptionHandlerLogException(queue, loggable);
+        final ExceptionHandler exceptionHandler = new ExceptionHandlerRetry(queue);
 
         final Command command = mock(Command.class);
         final Exception exception = mock(Exception.class);
 
         exceptionHandler.handle(command, exception);
 
-        final Command expected = new CommandLogException(loggable, command, exception);
+        final Command expected = new CommandRetry(command);
 
         assertEquals(1, queue.size());
         assertEquals(expected, queue.poll());
