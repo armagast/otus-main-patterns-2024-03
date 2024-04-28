@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 class ExceptionHandlerLogExceptionTest {
     @Test
     @DisplayName("Throws IllegalArgumentException when {queue} is null")
-    public void assertsCtorArgs() {
+    void assertsCtorArgs() {
         final Loggable loggable = mock(Loggable.class);
         final Queue<Command> queue = new PriorityQueue<>();
 
@@ -25,7 +25,7 @@ class ExceptionHandlerLogExceptionTest {
 
     @Test
     @DisplayName("Throws IllegalArgumentException when {command} or {exception} is null")
-    public void assertsHandleArgs() {
+    void assertsHandleArgs() {
         final Loggable loggable = mock(Loggable.class);
         final Queue<Command> queue = new PriorityQueue<>();
         final ExceptionHandler exceptionHandler = new ExceptionHandlerLogException(queue, loggable);
@@ -39,7 +39,7 @@ class ExceptionHandlerLogExceptionTest {
 
     @Test
     @DisplayName("Pushes CommandLogException to the queue")
-    public void pushesCommandLogExceptionToTheQueue() {
+    void pushesCommandLogExceptionToTheQueue() {
         final Loggable loggable = mock(Loggable.class);
         final Queue<Command> queue = new PriorityQueue<>();
         final ExceptionHandler exceptionHandler = new ExceptionHandlerLogException(queue, loggable);
