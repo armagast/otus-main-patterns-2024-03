@@ -16,22 +16,22 @@ class CommandRetryTest {
     @Test
     @DisplayName("Does not intercept exception thrown by inner Command::execute")
     void passesThroughThrownByCommandExecute() {
-        final Command command = mock(Command.class);
-        doThrow(new IllegalStateException()).when(command).execute();
+        final Command innerCommand = mock(Command.class);
+        doThrow(new IllegalStateException()).when(innerCommand).execute();
 
-        final CommandRetry commandRetry = new CommandRetry(command);
+        final CommandRetry command = new CommandRetry(innerCommand);
 
-        assertThrows(IllegalStateException.class, commandRetry::execute);
+        assertThrows(IllegalStateException.class, command::execute);
     }
 
     @Test
     @DisplayName("Executes inner command")
     void executesInnerCommand() {
-        final Command command = mock(Command.class);
+        final Command innerCommand = mock(Command.class);
 
-        final CommandRetry commandRetry = new CommandRetry(command);
-        commandRetry.execute();
+        final CommandRetry command = new CommandRetry(innerCommand);
+        command.execute();
 
-        verify(command).execute();
+        verify(innerCommand).execute();
     }
 }
