@@ -1,4 +1,4 @@
-package me.blokhin.homework003;
+package me.blokhin.homework003.command;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,9 +30,9 @@ class CommandLogExceptionTest {
         final Command commandLogException = new CommandLogException(loggable, command, exception);
         commandLogException.execute();
 
-
         final ArgumentCaptor<Command> commandCaptor = ArgumentCaptor.forClass(Command.class);
         final ArgumentCaptor<Exception> exceptionCaptor = ArgumentCaptor.forClass(Exception.class);
+
         verify(loggable).log(commandCaptor.capture(), exceptionCaptor.capture());
         assertEquals(command, commandCaptor.getValue());
         assertEquals(exception, exceptionCaptor.getValue());
@@ -51,5 +51,4 @@ class CommandLogExceptionTest {
 
         assertThrows(IllegalStateException.class, commandLogException::execute);
     }
-
 }

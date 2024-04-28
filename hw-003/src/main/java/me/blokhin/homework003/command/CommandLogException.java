@@ -1,6 +1,7 @@
-package me.blokhin.homework003;
+package me.blokhin.homework003.command;
 
 import lombok.Value;
+import me.blokhin.homework003.Assert;
 
 @Value
 public class CommandLogException implements Command {
