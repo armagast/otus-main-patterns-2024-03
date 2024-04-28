@@ -38,7 +38,6 @@ class ExceptionHandlerRetryTest {
     @Test
     @DisplayName("Adds CommandRetry to the queue")
     void addsCommandRetryToTheQueue() {
-        final Loggable loggable = mock(Loggable.class);
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = new ExceptionHandlerRetry(queue);
 
