@@ -7,7 +7,7 @@ import me.blokhin.homework003.Assert;
 public class CommandRetry implements Command {
     Command command;
 
-    public CommandRetry(Command command) {
+    public CommandRetry(final Command command) {
         Assert.notNull(command, "{command} must not be null");
 
         this.command = command;

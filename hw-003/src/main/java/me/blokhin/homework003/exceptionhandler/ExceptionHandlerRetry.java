@@ -11,14 +11,14 @@ import java.util.Queue;
 public class ExceptionHandlerRetry implements ExceptionHandler {
     private final Queue<Command> queue;
 
-    public ExceptionHandlerRetry(Queue<Command> queue) {
+    public ExceptionHandlerRetry(final Queue<Command> queue) {
         Assert.notNull(queue, "{queue} must not be null");
 
         this.queue = queue;
     }
 
     @Override
-    public void handle(Command command, Exception exception) {
+    public void handle(final Command command, final Exception exception) {
         Assert.notNull(command, "{command} must not be null");
         Assert.notNull(exception, "{exception} must not be null");
 

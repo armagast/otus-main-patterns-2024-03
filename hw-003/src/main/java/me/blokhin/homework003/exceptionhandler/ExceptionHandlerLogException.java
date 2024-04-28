@@ -11,7 +11,7 @@ public class ExceptionHandlerLogException implements ExceptionHandler {
     private final Queue<Command> queue;
     private final Loggable loggable;
 
-    public ExceptionHandlerLogException(Queue<Command> queue, Loggable loggable) {
+    public ExceptionHandlerLogException(final Queue<Command> queue, final Loggable loggable) {
         Assert.notNull(queue, "{queue} must not be null");
         Assert.notNull(loggable, "{loggable} must not be null");
 
@@ -20,7 +20,7 @@ public class ExceptionHandlerLogException implements ExceptionHandler {
     }
 
     @Override
-    public void handle(Command command, Exception exception) {
+    public void handle(final Command command, final Exception exception) {
         Assert.notNull(command, "{command} must not be null");
         Assert.notNull(exception, "{exception} must not be null");
 

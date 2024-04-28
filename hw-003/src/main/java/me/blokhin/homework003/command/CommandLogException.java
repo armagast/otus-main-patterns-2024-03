@@ -9,7 +9,7 @@ public class CommandLogException implements Command {
     Command command;
     Exception exception;
 
-    public CommandLogException(Loggable loggable, Command command, Exception exception) {
+    public CommandLogException(final Loggable loggable, final Command command, final Exception exception) {
         Assert.notNull(loggable, "{loggable} must not be null");
         Assert.notNull(command, "{command} must not be null");
         Assert.notNull(exception, "{exception} must not be null");
