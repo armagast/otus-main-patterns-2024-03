@@ -3,23 +3,23 @@ package me.blokhin.homework004.command;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-class CommandCheckAngleTest {
+class CommandCheckVelocityTest {
     @Test
     @DisplayName("Throws when {target} is null")
     void assertsCtorArgs() {
-        assertThrows(IllegalArgumentException.class, () -> new CommandCheckAngle(null));
+        assertThrows(IllegalArgumentException.class, () -> new CommandCheckVelocity(null));
     }
 
     @Test
     @DisplayName("Throws when angle is null")
     void throwsWhenAngleIsNull() {
-        final HasAngle target = mock(HasAngle.class);
-        doReturn(null).when(target).getAngle();
+        final HasVelocity target = mock(HasVelocity.class);
+        doReturn(null).when(target).getVelocity();
 
-        final Command command = new CommandCheckAngle(target);
+        final Command command = new CommandCheckVelocity(target);
 
         assertThrows(IllegalStateException.class, command::execute);
     }
@@ -27,10 +27,10 @@ class CommandCheckAngleTest {
     @Test
     @DisplayName("Passes through exception thrown by HasAngle::getAngle")
     void passesThroughThrownByHasAngleGetAngle() {
-        final HasAngle target = mock(HasAngle.class);
-        doThrow(new IllegalStateException()).when(target).getAngle();
+        final HasVelocity target = mock(HasVelocity.class);
+        doThrow(new IllegalStateException()).when(target).getVelocity();
 
-        final Command command = new CommandCheckAngle(target);
+        final Command command = new CommandCheckVelocity(target);
 
         assertThrows(IllegalStateException.class, command::execute);
     }
