@@ -4,4 +4,5 @@ import me.blokhin.homework004.Fuel;
 
 public interface FuelCheckable {
     Fuel getFuel();
+    Fuel getFuelBurnRate();
 }
