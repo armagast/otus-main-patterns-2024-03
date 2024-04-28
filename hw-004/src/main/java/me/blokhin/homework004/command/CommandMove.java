@@ -1,12 +1,14 @@
 package me.blokhin.homework004.command;
 
+import lombok.Value;
 import me.blokhin.homework004.Assert;
 import me.blokhin.homework004.Vector;
 
 import java.util.Objects;
 
+@Value
 public class CommandMove {
-    private final Movable movable;
+    Movable movable;
 
     public CommandMove(Movable movable) {
         Assert.notNull(movable, "{movable} must not be null");

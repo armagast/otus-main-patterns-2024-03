@@ -1,12 +1,14 @@
 package me.blokhin.homework004.command;
 
+import lombok.Value;
 import me.blokhin.homework004.Angle;
 import me.blokhin.homework004.Assert;
 
 import java.util.Objects;
 
+@Value
 public class CommandRotate {
-    private final Rotatable rotatable;
+    Rotatable rotatable;
 
     public CommandRotate(Rotatable rotatable) {
         Assert.notNull(rotatable, "{rotatable} must not be null");
