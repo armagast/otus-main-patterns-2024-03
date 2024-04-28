@@ -10,7 +10,7 @@ import java.util.Objects;
 public class CommandRotate {
     Rotatable rotatable;
 
-    public CommandRotate(Rotatable rotatable) {
+    public CommandRotate(final Rotatable rotatable) {
         Assert.notNull(rotatable, "{rotatable} must not be null");
 
         this.rotatable = rotatable;

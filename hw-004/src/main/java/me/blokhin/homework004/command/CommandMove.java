@@ -10,7 +10,7 @@ import java.util.Objects;
 public class CommandMove {
     Movable movable;
 
-    public CommandMove(Movable movable) {
+    public CommandMove(final Movable movable) {
         Assert.notNull(movable, "{movable} must not be null");
 
         this.movable = movable;

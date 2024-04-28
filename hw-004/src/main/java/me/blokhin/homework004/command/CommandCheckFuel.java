@@ -11,7 +11,7 @@ import java.util.Objects;
 public class CommandCheckFuel implements Command {
     FuelCheckable checkable;
 
-    public CommandCheckFuel(FuelCheckable checkable) {
+    public CommandCheckFuel(final FuelCheckable checkable) {
         Assert.notNull(checkable, "{checkable} must not be null");
 
         this.checkable = checkable;
