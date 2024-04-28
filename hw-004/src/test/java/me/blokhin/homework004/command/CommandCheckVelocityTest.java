@@ -25,8 +25,8 @@ class CommandCheckVelocityTest {
     }
 
     @Test
-    @DisplayName("Passes through exception thrown by HasAngle::getAngle")
-    void passesThroughThrownByHasAngleGetAngle() {
+    @DisplayName("Passes through exception thrown by HasVelocity::getVelocity")
+    void passesThroughThrownByHasVelocityGetVelocity() {
         final HasVelocity target = mock(HasVelocity.class);
         doThrow(new IllegalStateException()).when(target).getVelocity();
 
