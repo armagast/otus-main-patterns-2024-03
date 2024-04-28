@@ -7,6 +7,7 @@ import me.blokhin.homework003.command.Loggable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -24,7 +25,7 @@ class ExceptionHandlerRetryTest {
     @Test
     @DisplayName("Throws IllegalArgumentException when {command} or {exception} is null")
     void assertsHandleArgs() {
-        final Queue<Command> queue = new PriorityQueue<>();
+        final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = new ExceptionHandlerRetry(queue);
 
         final Command command = mock(Command.class);
@@ -38,7 +39,7 @@ class ExceptionHandlerRetryTest {
     @DisplayName("Adds CommandRetry to the queue")
     void addsCommandRetryToTheQueue() {
         final Loggable loggable = mock(Loggable.class);
-        final Queue<Command> queue = new PriorityQueue<>();
+        final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = new ExceptionHandlerRetry(queue);
 
         final Command command = mock(Command.class);

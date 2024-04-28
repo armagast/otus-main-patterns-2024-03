@@ -6,7 +6,7 @@ import me.blokhin.homework003.command.Loggable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Queue;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +17,7 @@ class ExceptionHandlerLogExceptionTest {
     @DisplayName("Throws IllegalArgumentException when {queue} is null")
     void assertsCtorArgs() {
         final Loggable loggable = mock(Loggable.class);
-        final Queue<Command> queue = new PriorityQueue<>();
+        final Queue<Command> queue = new LinkedList<>();
 
         assertThrows(IllegalArgumentException.class, () -> new ExceptionHandlerLogException(null, loggable));
         assertThrows(IllegalArgumentException.class, () -> new ExceptionHandlerLogException(queue, null));
@@ -27,7 +27,7 @@ class ExceptionHandlerLogExceptionTest {
     @DisplayName("Throws IllegalArgumentException when {command} or {exception} is null")
     void assertsHandleArgs() {
         final Loggable loggable = mock(Loggable.class);
-        final Queue<Command> queue = new PriorityQueue<>();
+        final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = new ExceptionHandlerLogException(queue, loggable);
 
         final Command command = mock(Command.class);
@@ -41,7 +41,7 @@ class ExceptionHandlerLogExceptionTest {
     @DisplayName("Adds CommandLogException to the queue")
     void addsCommandLogExceptionToTheQueue() {
         final Loggable loggable = mock(Loggable.class);
-        final Queue<Command> queue = new PriorityQueue<>();
+        final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = new ExceptionHandlerLogException(queue, loggable);
 
         final Command command = mock(Command.class);
