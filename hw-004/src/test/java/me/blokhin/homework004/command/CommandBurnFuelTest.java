@@ -52,7 +52,7 @@ class CommandBurnFuelTest {
     }
 
     @Test
-    @DisplayName("Passes throw exception thrown by FuelBurnable::getFuel")
+    @DisplayName("Passes through exception thrown by FuelBurnable::getFuel")
     void passesThroughThrownByFuelBurnableGetFuel() {
         final FuelBurnable burnable = mock(FuelBurnable.class);
         final Fuel fuel = mock(Fuel.class);
@@ -84,7 +84,7 @@ class CommandBurnFuelTest {
     }
 
     @Test
-    @DisplayName("Passes throw exception thrown by FuelBurnable::getFuelBurnRate")
+    @DisplayName("Passes through exception thrown by FuelBurnable::getFuelBurnRate")
     void passesThroughThrownByFuelBurnableGetFuelBurnRate() {
         final FuelBurnable burnable = mock(FuelBurnable.class);
         final Fuel fuel = mock(Fuel.class);
@@ -100,7 +100,7 @@ class CommandBurnFuelTest {
     }
 
     @Test
-    @DisplayName("Passes throw exception thrown by FuelBurnable::setFuel")
+    @DisplayName("Passes through exception thrown by FuelBurnable::setFuel")
     void passesThroughThrownByFuelBurnableSetFuel() {
         final FuelBurnable burnable = mock(FuelBurnable.class);
         final Fuel fuel = mock(Fuel.class);
@@ -117,7 +117,7 @@ class CommandBurnFuelTest {
     }
 
     @Test
-    @DisplayName("Passes throw exception thrown by Fuel::burn")
+    @DisplayName("Passes through exception thrown by Fuel::burn")
     void passesThroughThrownByFuelBurn() {
         final FuelBurnable burnable = mock(FuelBurnable.class);
         final Fuel fuel = mock(Fuel.class);
