@@ -18,6 +18,7 @@
         <module>hw-003</module>
         <module>hw-004</module>
         <module>hw-005</module>
+        <module>hw-006</module>
     </modules>
 
     <properties>
