@@ -9,9 +9,6 @@ import java.util.List;
 
 @Value
 public class CommandCompile implements Command {
-    private static final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-    private static final DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
-
     JavaFileManager javaFileManager;
     String className;
     String classSource;
@@ -28,8 +25,10 @@ public class CommandCompile implements Command {
 
     @Override
     public void execute() {
+        final DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
         final List<JavaFileObject> classSourceFiles = Collections.singletonList(new CustomInputJavaFileObject(className, classSource));
-        final JavaCompiler.CompilationTask task = compiler.getTask(null, javaFileManager, diagnostics, null, null, classSourceFiles);
+        final JavaCompiler.CompilationTask task = ToolProvider.getSystemJavaCompiler()
+                .getTask(null, javaFileManager, diagnostics, null, null, classSourceFiles);
 
         boolean success = task.call();
 

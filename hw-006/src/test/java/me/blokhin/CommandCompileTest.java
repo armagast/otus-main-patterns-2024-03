@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import javax.tools.JavaFileManager;
 import javax.tools.ToolProvider;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,6 +49,7 @@ class CommandCompileTest {
         command.execute();
 
         final Class<?> classCompiled = javaFileManager.getClassLoader(null).loadClass(className);
+
         final Object instance = classCompiled.getConstructor().newInstance();
         final Method method = classCompiled.getDeclaredMethod("getAnswerToTheUltimateQuestionOfLife");
 

@@ -15,7 +15,7 @@ public class CustomClassLoader extends ClassLoader {
 
     @Override
     protected Class<?> findClass(String className) throws ClassNotFoundException {
-        return manager.findClass(className)
+        return manager.findJavaFileObject(className)
                 .map(CustomOutputJavaFileObject::getBytes)
                 .map(bytes -> defineClass(className, bytes, 0, bytes.length))
                 .orElseThrow(() -> new ClassNotFoundException(className));

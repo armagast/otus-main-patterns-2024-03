@@ -10,13 +10,13 @@ import java.util.HashMap;
 import java.util.Optional;
 
 public class CustomJavaFileManager extends ForwardingJavaFileManager<StandardJavaFileManager> {
-    private final HashMap<String, CustomOutputJavaFileObject> classes;
+    private final HashMap<String, CustomOutputJavaFileObject> javaFileObjects;
     private final ClassLoader classLoader;
 
     public CustomJavaFileManager(final StandardJavaFileManager manager) {
         super(Assert.notNull(manager, "{manager} must not be null"));
 
-        this.classes = new HashMap<>();
+        this.javaFileObjects = new HashMap<>();
         this.classLoader = new CustomClassLoader(this.getClass().getClassLoader(), this);
     }
 
@@ -31,13 +31,13 @@ public class CustomJavaFileManager extends ForwardingJavaFileManager<StandardJav
                                                final JavaFileObject.Kind kind,
                                                final FileObject sibling)  {
 
-        final CustomOutputJavaFileObject object = new CustomOutputJavaFileObject(className, kind);
-        classes.put(className, object);
+        final CustomOutputJavaFileObject javaFileObject = new CustomOutputJavaFileObject(className, kind);
+        javaFileObjects.put(className, javaFileObject);
 
-        return object;
+        return javaFileObject;
     }
 
-    public Optional<CustomOutputJavaFileObject> findClass(final String className) {
-        return Optional.ofNullable(classes.get(className));
+    public Optional<CustomOutputJavaFileObject> findJavaFileObject(final String className) {
+        return Optional.ofNullable(javaFileObjects.get(className));
     }
 }
