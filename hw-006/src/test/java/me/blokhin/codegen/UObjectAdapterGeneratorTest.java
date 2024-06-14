@@ -35,7 +35,7 @@ class UObjectAdapterGeneratorTest {
     static void beforeAll() throws Exception {
         new CommandIOCInitialize().execute();
 
-        final String scopeId = "AdapterGeneratorTest";
+        final String scopeId = "UObjectAdapterGeneratorTest";
 
         ((Command) IOC.resolve("IOC.scopes.new", scopeId)).execute();
         ((Command) IOC.resolve("IOC.scopes.useScope", scopeId)).execute();
