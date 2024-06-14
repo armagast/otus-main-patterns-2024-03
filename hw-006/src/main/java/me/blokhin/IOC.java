@@ -14,8 +14,8 @@ public class IOC {
 
     @SuppressWarnings("unchecked")
     public static <T> T resolve(String name, Object... args) {
-        return resolver.resolve(name)
-                .map(supplier -> (T) supplier.get(args))
-                .orElseThrow(() -> new IllegalStateException(String.format("Dependency {%s} not found", name)));
+        return (T) resolver.resolve(name)
+                .orElseThrow(() -> new IllegalStateException(String.format("Dependency {%s} not found", name)))
+                .get(args);
     }
 }

@@ -8,8 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class IOCTest {
     @BeforeAll
@@ -142,5 +141,19 @@ class IOCTest {
         IOC.<Command>resolve("IOC.scopes.useScope", scopeId).execute();
 
         assertSame(dependency, IOC.resolve(dependencyName));
+    }
+
+    @Test
+    @DisplayName("Allows null values as dependency")
+    void allowsNullValues() {
+        final String scopeId = "IOCTest.allowsNullValues.scopeId";
+        final String dependencyName = "IOCTest.allowsNullValues.dependencyName";
+
+        IOC.<Command>resolve("IOC.scopes.useRootScope").execute();
+        IOC.<Command>resolve("IOC.scopes.new", scopeId).execute();
+        IOC.<Command>resolve("IOC.scopes.useScope", scopeId).execute();
+        IOC.<Command>resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> null).execute();
+
+        assertNull(IOC.resolve(dependencyName));
     }
 }
