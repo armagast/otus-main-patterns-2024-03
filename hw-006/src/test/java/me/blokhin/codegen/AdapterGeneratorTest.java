@@ -31,9 +31,9 @@ class AdapterGeneratorTest {
         ((Command) IOC.resolve("IOC.scopes.new", scopeId)).execute();
         ((Command) IOC.resolve("IOC.scopes.useScope", scopeId)).execute();
 
-        ((Command) IOC.resolve("IOC.register", AdapterGeneratorTestTarget.class.getCanonicalName() + ":integer.get", getterDependencySupplier)).execute();
-        ((Command) IOC.resolve("IOC.register", AdapterGeneratorTestTarget.class.getCanonicalName() + ":integer.set", setterDependencySupplier)).execute();
-        ((Command) IOC.resolve("IOC.register", AdapterGeneratorTestTarget.class.getCanonicalName() + ".method", methodDependencySupplier)).execute();
+        ((Command) IOC.resolve("IOC.register", AdapterGeneratorTestInterface.class.getCanonicalName() + ":integer.get", getterDependencySupplier)).execute();
+        ((Command) IOC.resolve("IOC.register", AdapterGeneratorTestInterface.class.getCanonicalName() + ":integer.set", setterDependencySupplier)).execute();
+        ((Command) IOC.resolve("IOC.register", AdapterGeneratorTestInterface.class.getCanonicalName() + ".method", methodDependencySupplier)).execute();
     }
 
     @DisplayName("Creates class, that can be instantiated with target instance")

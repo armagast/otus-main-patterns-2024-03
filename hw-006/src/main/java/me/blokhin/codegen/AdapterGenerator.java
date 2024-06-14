@@ -16,16 +16,16 @@ public class AdapterGenerator {
     private static final Class<?> commandClass = Command.class;
 
     public static final Function<Class<?>, String> DEFAULT_CLASS_NAMING_STRATEGY =
-            (targetClass) -> targetClass.getSimpleName() + "Adapter";
+            (interfaceClass) -> interfaceClass.getSimpleName() + "Adapter";
 
     public static final BiFunction<Class<?>, String, String> DEFAULT_GETTER_DEPENDENCY_NAMING_STRATEGY =
-            (targetClass, property) -> targetClass.getCanonicalName() + ":" + property + ".get";
+            (interfaceClass, property) -> interfaceClass.getCanonicalName() + ":" + property + ".get";
 
     public static final BiFunction<Class<?>, String, String> DEFAULT_METHOD_DEPENDENCY_NAMING_STRATEGY =
-            (targetClass, method) -> targetClass.getCanonicalName() + "." + method;
+            (interfaceClass, method) -> interfaceClass.getCanonicalName() + "." + method;
 
     public static final BiFunction<Class<?>, String, String> DEFAULT_SETTER_DEPENDENCY_NAMING_STRATEGY =
-            (targetClass, property) -> targetClass.getCanonicalName() + ":" + property + ".set";
+            (interfaceClass, property) -> interfaceClass.getCanonicalName() + ":" + property + ".set";
 
     private final Function<Class<?>, String> classNamingStrategy;
 
@@ -98,37 +98,37 @@ public class AdapterGenerator {
     private String generateMethods(final Class<?> targetClass, final Class<?> interfaceClass) {
         return Arrays.stream(interfaceClass.getMethods()).map(method -> {
             if (isGetter(method)) {
-                return generateGetter(targetClass, propertyName(method), method.getReturnType());
+                return generateGetter(interfaceClass, propertyName(method), method.getReturnType());
             }
 
             if (isSetter(method)) {
-                return generateSetter(targetClass, propertyName(method), method.getParameterTypes()[0]);
+                return generateSetter(interfaceClass, propertyName(method), method.getParameterTypes()[0]);
             }
 
-            return generateMethod(targetClass, method);
+            return generateMethod(interfaceClass, method);
         }).collect(Collectors.joining(""));
 
     }
 
-    private String generateGetter(final Class<?> targetClass, final String property, final Class<?> propertyClass) {
+    private String generateGetter(final Class<?> interfaceClass, final String property, final Class<?> propertyClass) {
         final String returnType = propertyClass.getCanonicalName();
         final String methodName = "get" + pascalCase(property);
 
         return "\n" +
                 "  public " + returnType + " " + methodName + "() {\n" +
-                "    return " + containerClass.getSimpleName() + ".resolve(\"" + getterDependencyNamingStrategy.apply(targetClass, property) + "\", target);\n" +
+                "    return " + containerClass.getSimpleName() + ".resolve(\"" + getterDependencyNamingStrategy.apply(interfaceClass, property) + "\", target);\n" +
                 "  }\n";
 
     }
 
-    private String generateSetter(final Class<?> targetClass, final String property, final Class<?> propertyClass) {
+    private String generateSetter(final Class<?> interfaceClass, final String property, final Class<?> propertyClass) {
         return "\n" +
                 "  public void set" + pascalCase(property) + "(" + propertyClass.getCanonicalName() + " value) {\n" +
-                "    ((" + commandClass.getCanonicalName() + ") " + containerClass.getSimpleName() + ".resolve(\"" + setterDependencyNamingStrategy.apply(targetClass, property) + "\", target, value)).execute();\n" +
+                "    ((" + commandClass.getCanonicalName() + ") " + containerClass.getSimpleName() + ".resolve(\"" + setterDependencyNamingStrategy.apply(interfaceClass, property) + "\", target, value)).execute();\n" +
                 "  }\n";
     }
 
-    private String generateMethod(final Class<?> targetClass, final Method method) {
+    private String generateMethod(final Class<?> interfaceClass, final Method method) {
         final String returnType = method.getReturnType().getCanonicalName();
         final String parametersList = IntStream.range(0, method.getParameterCount())
                 .mapToObj(index -> "arg" + index)
@@ -141,8 +141,8 @@ public class AdapterGenerator {
         return "\n" +
                 "  public " + returnType + " " + method.getName() + "(" + parametersTypedList + ") {\n" +
                 (method.getReturnType() == void.class ?
-                        "    " + containerClass.getSimpleName() + ".resolve(\"" + methodDependencyNamingStrategy.apply(targetClass, method.getName()) + "\", target, " + parametersList + ");\n" :
-                        "    return (" + returnType + ") " + containerClass.getSimpleName() + ".resolve(\"" + methodDependencyNamingStrategy.apply(targetClass, method.getName()) + "\", target, " + parametersList + ");\n") +
+                        "    " + containerClass.getSimpleName() + ".resolve(\"" + methodDependencyNamingStrategy.apply(interfaceClass, method.getName()) + "\", target, " + parametersList + ");\n" :
+                        "    return (" + returnType + ") " + containerClass.getSimpleName() + ".resolve(\"" + methodDependencyNamingStrategy.apply(interfaceClass, method.getName()) + "\", target, " + parametersList + ");\n") +
                 "  }\n";
     }
 
