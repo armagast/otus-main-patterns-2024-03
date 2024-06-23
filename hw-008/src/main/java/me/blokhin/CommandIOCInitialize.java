@@ -24,7 +24,7 @@ public class CommandIOCInitialize implements Command {
             final Map<String, DependencySupplier> scope = new HashMap<>();
             scopes.put(ROOT_SCOPE_ID, scope);
 
-            scope.put("IOC.scopes.parentScopeId", (args) -> null);
+            scope.put("IOC.Scopes.parentScopeId", (args) -> null);
 
             //region Commands
             scope.put(
@@ -33,12 +33,12 @@ public class CommandIOCInitialize implements Command {
             );
 
             scope.put(
-                    "IOC.scopes.new",
+                    "IOC.Scopes.new",
                     (args) -> (Command) () -> this.scopesNew((String) args[0])
             );
 
             scope.put(
-                    "IOC.scopes.use",
+                    "IOC.Scopes.use",
                     (args) -> (Command) () -> this.scopesUse((String) args[0])
             );
             //endregion
@@ -82,7 +82,7 @@ public class CommandIOCInitialize implements Command {
             final Map<String, DependencySupplier> scope = new HashMap<>();
 
             final String parentScopeId = currentScopeId.get();
-            scope.put("IOC.scopes.parentScopeId", (args) -> parentScopeId);
+            scope.put("IOC.Scopes.parentScopeId", (args) -> parentScopeId);
 
             scopes.put(scopeId, scope);
         }
@@ -106,7 +106,7 @@ public class CommandIOCInitialize implements Command {
     }
 
     private Optional<Map<String, DependencySupplier>> getParentScope(final Map<String, DependencySupplier> scope) {
-        final String parentScopeId = (String) scope.get("IOC.scopes.parentScopeId").get();
+        final String parentScopeId = (String) scope.get("IOC.Scopes.parentScopeId").get();
 
         return Objects.nonNull(parentScopeId) ? Optional.of(getScope(parentScopeId)) : Optional.empty();
     }

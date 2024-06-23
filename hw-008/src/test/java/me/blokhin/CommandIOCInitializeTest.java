@@ -26,7 +26,7 @@ class CommandIOCInitializeTest {
     void throwsOnRootScopeExtension() {
         final String dependencyName = "CommandIOCInitializeTest.throwsOnRootScopeExtension.dependencyName";
 
-        IOC.<Command>resolve("IOC.scopes.use", "root").execute();
+        IOC.<Command>resolve("IOC.Scopes.use", "root").execute();
 
         final Command command = IOC.resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> new Object());
         assertThrows(IllegalStateException.class, command::execute);
@@ -37,10 +37,10 @@ class CommandIOCInitializeTest {
     void throwsOnNonUniqueScopeIdentifier() {
         final String scopeId = "CommandIOCInitializeTest.throwsOnNonUniqueScopeIdentifier.scopeId";
 
-        IOC.<Command>resolve("IOC.scopes.use", "root").execute();
-        IOC.<Command>resolve("IOC.scopes.new", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", "root").execute();
+        IOC.<Command>resolve("IOC.Scopes.new", scopeId).execute();
 
-        final Command command = IOC.resolve("IOC.scopes.new", scopeId);
+        final Command command = IOC.resolve("IOC.Scopes.new", scopeId);
         assertThrows(IllegalStateException.class, command::execute);
     }
 
@@ -51,9 +51,9 @@ class CommandIOCInitializeTest {
         final String dependencyName = "CommandIOCInitializeTest.throwsOnUpdateDependencySupplier.dependencyName";
         final Object dependency = new Object();
 
-        IOC.<Command>resolve("IOC.scopes.use", "root").execute();
-        IOC.<Command>resolve("IOC.scopes.new", scopeId).execute();
-        IOC.<Command>resolve("IOC.scopes.use", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", "root").execute();
+        IOC.<Command>resolve("IOC.Scopes.new", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", scopeId).execute();
         IOC.<Command>resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> dependency).execute();
 
         final Command command = IOC.resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> dependency);
@@ -68,9 +68,9 @@ class CommandIOCInitializeTest {
         final String dependencyName = "CommandIOCInitializeTest.resolvesCurrentScope.dependencyName";
         final Object dependency = new Object();
 
-        IOC.<Command>resolve("IOC.scopes.use", "root").execute();
-        IOC.<Command>resolve("IOC.scopes.new", scopeId).execute();
-        IOC.<Command>resolve("IOC.scopes.use", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", "root").execute();
+        IOC.<Command>resolve("IOC.Scopes.new", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", scopeId).execute();
         IOC.<Command>resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> dependency).execute();
 
         assertSame(dependency, IOC.resolve(dependencyName));
@@ -84,12 +84,12 @@ class CommandIOCInitializeTest {
         final String dependencyName = "CommandIOCInitializeTest.resolvesParentScope.dependencyName";
         final Object dependency = new Object();
 
-        IOC.<Command>resolve("IOC.scopes.use", "root").execute();
-        IOC.<Command>resolve("IOC.scopes.new", parentScopeId).execute();
-        IOC.<Command>resolve("IOC.scopes.use", parentScopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", "root").execute();
+        IOC.<Command>resolve("IOC.Scopes.new", parentScopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", parentScopeId).execute();
         IOC.<Command>resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> dependency).execute();
-        IOC.<Command>resolve("IOC.scopes.new", scopeId).execute();
-        IOC.<Command>resolve("IOC.scopes.use", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.new", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", scopeId).execute();
 
         assertSame(dependency, IOC.resolve(dependencyName));
     }
@@ -102,14 +102,14 @@ class CommandIOCInitializeTest {
         final String dependencyName = "CommandIOCInitializeTest.usesThreadLocalCurrentScope.dependencyName";
         final Object dependency = new Object();
 
-        IOC.<Command>resolve("IOC.scopes.use", "root").execute();
-        IOC.<Command>resolve("IOC.scopes.new", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", "root").execute();
+        IOC.<Command>resolve("IOC.Scopes.new", scopeId).execute();
 
         final Semaphore semaphore = new Semaphore(1);
         semaphore.acquire();
 
         new Thread(() -> {
-            IOC.<Command>resolve("IOC.scopes.use", scopeId).execute();
+            IOC.<Command>resolve("IOC.Scopes.use", scopeId).execute();
             IOC.<Command>resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> dependency).execute();
 
             semaphore.release();
@@ -128,14 +128,14 @@ class CommandIOCInitializeTest {
         final String dependencyName = "CommandIOCInitializeTest.usesSharedScopesStorage.dependencyName";
         final Object dependency = new Object();
 
-        IOC.<Command>resolve("IOC.scopes.use", "root").execute();
-        IOC.<Command>resolve("IOC.scopes.new", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", "root").execute();
+        IOC.<Command>resolve("IOC.Scopes.new", scopeId).execute();
 
         final Semaphore semaphore = new Semaphore(1);
         semaphore.acquire();
 
         new Thread(() -> {
-            IOC.<Command>resolve("IOC.scopes.use", scopeId).execute();
+            IOC.<Command>resolve("IOC.Scopes.use", scopeId).execute();
             IOC.<Command>resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> dependency).execute();
 
             semaphore.release();
@@ -143,7 +143,7 @@ class CommandIOCInitializeTest {
 
         semaphore.acquire();
 
-        IOC.<Command>resolve("IOC.scopes.use", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", scopeId).execute();
 
         assertSame(dependency, IOC.resolve(dependencyName));
     }
@@ -154,9 +154,9 @@ class CommandIOCInitializeTest {
         final String scopeId = "CommandIOCInitializeTest.allowsNullValues.scopeId";
         final String dependencyName = "CommandIOCInitializeTest.allowsNullValues.dependencyName";
 
-        IOC.<Command>resolve("IOC.scopes.use", "root").execute();
-        IOC.<Command>resolve("IOC.scopes.new", scopeId).execute();
-        IOC.<Command>resolve("IOC.scopes.use", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", "root").execute();
+        IOC.<Command>resolve("IOC.Scopes.new", scopeId).execute();
+        IOC.<Command>resolve("IOC.Scopes.use", scopeId).execute();
         IOC.<Command>resolve("IOC.register", dependencyName, (DependencySupplier) (args) -> null).execute();
 
         assertNull(IOC.resolve(dependencyName));
