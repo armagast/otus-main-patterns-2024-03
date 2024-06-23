@@ -7,17 +7,17 @@ import java.util.Queue;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class CommandQueueExecutor {
+public class QueueExecutor {
     private final Queue<Command> queue;
     private final ExceptionHandler exceptionHandler;
 
-    private final List<Consumer<CommandQueueExecutor>> onEnter = new LinkedList<>();
-    private final List<Consumer<CommandQueueExecutor>> onLeave = new LinkedList<>();
+    private final List<Consumer<QueueExecutor>> onEnter = new LinkedList<>();
+    private final List<Consumer<QueueExecutor>> onLeave = new LinkedList<>();
 
     private Supplier<Boolean> canContinue = this::canContinueAlways;
 
-    public CommandQueueExecutor(final Queue<Command> queue,
-                                final ExceptionHandler exceptionHandler) {
+    public QueueExecutor(final Queue<Command> queue,
+                         final ExceptionHandler exceptionHandler) {
 
         Assert.notNull(queue, "{queue} must not be null");
         Assert.notNull(exceptionHandler, "{exceptionHandler} must not be null");
@@ -25,12 +25,12 @@ public class CommandQueueExecutor {
         this.exceptionHandler = exceptionHandler;
     }
 
-    public void onEnter(final Consumer<CommandQueueExecutor> onEnter) {
+    public void onEnter(final Consumer<QueueExecutor> onEnter) {
         Assert.notNull(onEnter, "{onEnter} must not be null");
         this.onEnter.add(onEnter);
     }
 
-    public void onLeave(final Consumer<CommandQueueExecutor> onLeave) {
+    public void onLeave(final Consumer<QueueExecutor> onLeave) {
         Assert.notNull(onLeave, "{onLeave} must not be null");
         this.onLeave.add(onLeave);
     }

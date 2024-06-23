@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class CommandQueueExecutorTest {
+class QueueExecutorTest {
     @DisplayName("Executes commands in queue")
     @Test
     @Timeout(1)
@@ -22,7 +22,7 @@ class CommandQueueExecutorTest {
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
 
-        final CommandQueueExecutor executor = new CommandQueueExecutor(queue, exceptionHandler);
+        final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
         queue.add(() -> commandExecuted.set(true));
         queue.add(executor::kill);
@@ -39,7 +39,7 @@ class CommandQueueExecutorTest {
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
 
-        final CommandQueueExecutor executor = new CommandQueueExecutor(queue, exceptionHandler);
+        final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
         final Command command = mock(Command.class);
         final Exception exception = new RuntimeException("Some exception");
@@ -65,7 +65,7 @@ class CommandQueueExecutorTest {
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
 
-        final CommandQueueExecutor executor = new CommandQueueExecutor(queue, exceptionHandler);
+        final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
         queue.add(() -> prefixExecuted.set(true));
         queue.add(executor::kill);
@@ -75,6 +75,7 @@ class CommandQueueExecutorTest {
 
         assertTrue(prefixExecuted.get());
         assertFalse(suffixExecuted.get());
+        assertFalse(queue.isEmpty());
     }
 
     @DisplayName("Stops after flushing queue on stop")
@@ -87,7 +88,7 @@ class CommandQueueExecutorTest {
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
 
-        final CommandQueueExecutor executor = new CommandQueueExecutor(queue, exceptionHandler);
+        final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
         queue.add(() -> prefixExecuted.set(true));
         queue.add(executor::stop);
@@ -97,6 +98,7 @@ class CommandQueueExecutorTest {
 
         assertTrue(prefixExecuted.get());
         assertTrue(suffixExecuted.get());
+        assertTrue(queue.isEmpty());
     }
 
     @DisplayName("Calls onEnter callback")
@@ -106,12 +108,12 @@ class CommandQueueExecutorTest {
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
 
-        final CommandQueueExecutor executor = new CommandQueueExecutor(queue, exceptionHandler);
+        final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
         queue.add(executor::kill);
 
         @SuppressWarnings("unchecked")
-        final Consumer<CommandQueueExecutor> onEnterCallback = mock(Consumer.class);
+        final Consumer<QueueExecutor> onEnterCallback = mock(Consumer.class);
 
         executor.onEnter(onEnterCallback);
 
@@ -127,12 +129,12 @@ class CommandQueueExecutorTest {
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
 
-        final CommandQueueExecutor executor = new CommandQueueExecutor(queue, exceptionHandler);
+        final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
         queue.add(executor::kill);
 
         @SuppressWarnings("unchecked")
-        final Consumer<CommandQueueExecutor> onLeaveCallback = mock(Consumer.class);
+        final Consumer<QueueExecutor> onLeaveCallback = mock(Consumer.class);
 
         executor.onLeave(onLeaveCallback);
 
