@@ -12,9 +12,9 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>hw-006</artifactId>
+    <artifactId>hw-007</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Homework 006</name>
+    <name>Homework 007</name>
 
     <dependencies>
         <dependency>
