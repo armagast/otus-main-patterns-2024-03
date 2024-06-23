@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Timeout;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,32 +16,30 @@ class QueueExecutorTest {
     @Test
     @Timeout(1)
     void runs() {
-        final AtomicBoolean commandExecuted = new AtomicBoolean(false);
-
-        final Queue<Command> queue = new LinkedList<>();
+        final Command command = mock(Command.class);
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
+        final Queue<Command> queue = new LinkedList<>();
 
         final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
-        queue.add(() -> commandExecuted.set(true));
+        queue.add(command);
         queue.add(executor::kill);
 
         executor.run();
 
-        assertTrue(commandExecuted.get());
+        verify(command, times(1)).execute();
     }
 
     @DisplayName("Dispatches exceptions")
     @Test
     @Timeout(1)
     void dispatchesExceptions() {
-        final Queue<Command> queue = new LinkedList<>();
-        final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
-
-        final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
-
         final Command command = mock(Command.class);
         final Exception exception = new RuntimeException("Some exception");
+        final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
+        final Queue<Command> queue = new LinkedList<>();
+
+        final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
         doNothing().when(exceptionHandler).handle(command, exception);
         doThrow(exception).when(command).execute();
@@ -59,22 +56,21 @@ class QueueExecutorTest {
     @Test
     @Timeout(1)
     void stopsImmediately() {
-        final AtomicBoolean prefixExecuted = new AtomicBoolean(false);
-        final AtomicBoolean suffixExecuted = new AtomicBoolean(false);
-
+        final Command prefixCommand = mock(Command.class);
+        final Command suffixCommand = mock(Command.class);
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
 
         final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
-        queue.add(() -> prefixExecuted.set(true));
+        queue.add(prefixCommand);
         queue.add(executor::kill);
-        queue.add(() -> suffixExecuted.set(true));
+        queue.add(suffixCommand);
 
         executor.run();
 
-        assertTrue(prefixExecuted.get());
-        assertFalse(suffixExecuted.get());
+        verify(prefixCommand, times(1)).execute();
+        verifyNoInteractions(suffixCommand);
         assertFalse(queue.isEmpty());
     }
 
@@ -82,22 +78,21 @@ class QueueExecutorTest {
     @Test
     @Timeout(1)
     void stopsAfterFlushingQueue() {
-        final AtomicBoolean prefixExecuted = new AtomicBoolean(false);
-        final AtomicBoolean suffixExecuted = new AtomicBoolean(false);
-
+        final Command prefixCommand = mock(Command.class);
+        final Command suffixCommand = mock(Command.class);
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
 
         final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
-        queue.add(() -> prefixExecuted.set(true));
+        queue.add(prefixCommand);
         queue.add(executor::stop);
-        queue.add(() -> suffixExecuted.set(true));
+        queue.add(suffixCommand);
 
         executor.run();
 
-        assertTrue(prefixExecuted.get());
-        assertTrue(suffixExecuted.get());
+        verify(prefixCommand, times(1)).execute();
+        verify(suffixCommand, times(1)).execute();
         assertTrue(queue.isEmpty());
     }
 

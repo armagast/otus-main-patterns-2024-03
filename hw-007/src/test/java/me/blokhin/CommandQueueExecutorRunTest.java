@@ -7,36 +7,32 @@ import org.junit.jupiter.api.Timeout;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicBoolean;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 class CommandQueueExecutorRunTest {
     @DisplayName("Runs executor in new thread")
     @Test
     @Timeout(1)
     void callsRun() throws Exception {
-        final AtomicBoolean commandExecuted = new AtomicBoolean(false);
-
         final Semaphore semaphore = new Semaphore(1);
         semaphore.acquire();
 
-        final Queue<Command> queue = new LinkedList<>();
+        final Command command = mock(Command.class);
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
+        final Queue<Command> queue = new LinkedList<>();
 
         final QueueExecutor executor = new QueueExecutor(queue, exceptionHandler);
 
         executor.onLeave(ex -> semaphore.release());
 
-        queue.add(() -> commandExecuted.set(true));
+        queue.add(command);
         queue.add(executor::stop);
 
-        Command command = new CommandQueueExecutorRun(executor);
-        command.execute();
+        new CommandQueueExecutorRun(executor).execute();
 
         semaphore.acquire();
 
-        assertTrue(commandExecuted.get());
+        verify(command, times(1)).execute();
     }
 }
