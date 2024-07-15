@@ -15,6 +15,14 @@ class InterpretEndpointTest {
         new CommandIOCInitialize().execute();
     }
 
+    @DisplayName("Throws IllegalArgumentException when input is null")
+    @Test
+    void assertsArgs() {
+        final InterpretEndpoint endpoint = new InterpretEndpoint();
+
+        assertThrows(IllegalArgumentException.class, () -> endpoint.interpret(null));
+    }
+
     @DisplayName("Creates instance of CommandInterpret and adds it to the queue")
     @Test
     void addsCommandToTheQueue() {
