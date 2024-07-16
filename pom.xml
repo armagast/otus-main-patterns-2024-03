@@ -20,6 +20,7 @@
         <module>hw-005</module>
         <module>hw-006</module>
         <module>hw-007</module>
+        <module>hw-008</module>
     </modules>
 
     <properties>
