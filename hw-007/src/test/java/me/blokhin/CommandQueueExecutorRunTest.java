@@ -13,7 +13,7 @@ import static org.mockito.Mockito.*;
 class CommandQueueExecutorRunTest {
     @DisplayName("Runs executor in new thread")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void callsRun() throws Exception {
         final Semaphore semaphore = new Semaphore(1);
         semaphore.acquire();

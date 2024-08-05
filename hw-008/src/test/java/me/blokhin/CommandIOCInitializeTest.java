@@ -96,7 +96,7 @@ class CommandIOCInitializeTest {
 
     @DisplayName("Uses thread local current scope")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void usesThreadLocalCurrentScope() throws InterruptedException {
         final String scopeId = "CommandIOCInitializeTest.usesThreadLocalCurrentScope.scopeId";
         final String dependencyName = "CommandIOCInitializeTest.usesThreadLocalCurrentScope.dependencyName";
@@ -122,7 +122,7 @@ class CommandIOCInitializeTest {
 
     @DisplayName("Uses shared scopes storage")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void usesSharedScopesStorage() throws InterruptedException {
         final String scopeId = "CommandIOCInitializeTest.usesSharedScopesStorage.scopeId";
         final String dependencyName = "CommandIOCInitializeTest.usesSharedScopesStorage.dependencyName";

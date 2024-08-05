@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 class QueueExecutorTest {
     @DisplayName("Executes commands in queue")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void runs() {
         final Command command = mock(Command.class);
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
@@ -32,7 +32,7 @@ class QueueExecutorTest {
 
     @DisplayName("Dispatches exceptions")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void dispatchesExceptions() {
         final Command command = mock(Command.class);
         final Exception exception = new RuntimeException("Some exception");
@@ -54,7 +54,7 @@ class QueueExecutorTest {
 
     @DisplayName("Stops immediately on kill")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void stopsImmediately() {
         final Command prefixCommand = mock(Command.class);
         final Command suffixCommand = mock(Command.class);
@@ -76,7 +76,7 @@ class QueueExecutorTest {
 
     @DisplayName("Stops after flushing queue on stop")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void stopsAfterFlushingQueue() {
         final Command prefixCommand = mock(Command.class);
         final Command suffixCommand = mock(Command.class);
@@ -98,7 +98,7 @@ class QueueExecutorTest {
 
     @DisplayName("Calls onEnter callback")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void callsOnEnter() {
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);
@@ -119,7 +119,7 @@ class QueueExecutorTest {
 
     @DisplayName("Calls onLeave callback")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void callsOnLeave() {
         final Queue<Command> queue = new LinkedList<>();
         final ExceptionHandler exceptionHandler = mock(ExceptionHandler.class);

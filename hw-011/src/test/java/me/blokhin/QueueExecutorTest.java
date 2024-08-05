@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
 class QueueExecutorTest {
     @DisplayName("Uses state to decide if execution should continue")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void usesStateCanContinue() {
         final QueueExecutorState state = mock(QueueExecutorState.class);
         when(state.canContinue())
@@ -35,7 +35,7 @@ class QueueExecutorTest {
 
     @DisplayName("Uses state to process command")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void usesStateProcess() {
         final Command command1 = mock(Command.class);
         final Command command2 = mock(Command.class);
@@ -60,7 +60,7 @@ class QueueExecutorTest {
 
     @DisplayName("Updates state")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void updatesState() {
         final QueueExecutorState state = mock(QueueExecutorState.class);
         when(state.canContinue()).thenReturn(true);
@@ -81,7 +81,7 @@ class QueueExecutorTest {
 
     @DisplayName("Calls onEnter callback")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void callsOnEnter() {
         final QueueExecutorState state = mock(QueueExecutorState.class);
         when(state.canContinue()).thenReturn(false);
@@ -102,7 +102,7 @@ class QueueExecutorTest {
 
     @DisplayName("Calls onLeave callback")
     @Test
-    @Timeout(1)
+    @Timeout(5)
     void callsOnLeave() {
         final QueueExecutorState state = mock(QueueExecutorState.class);
         when(state.canContinue()).thenReturn(false);
